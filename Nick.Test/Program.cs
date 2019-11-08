@@ -8,6 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Threading;
 
 
 namespace Nick.Test
@@ -17,6 +18,25 @@ namespace Nick.Test
         static void Main(string[] args)
         {
 
+            
+            
+
+            while (true)
+            {
+                Thread.Sleep(100);
+                ShowHello();
+            }
+
+
+
+            Console.ReadKey();
+
+        }
+
+        private static void ShowHello()
+        {
+            Console.WriteLine("打印我");
+          
         }
     }
 }
