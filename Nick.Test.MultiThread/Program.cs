@@ -15,7 +15,7 @@ namespace Nick.Test.MultiThread
     class Program
     {
         const int LowerBound = 1;
-        const int UpperBound = 10;
+        const int UpperBound = 100;
         private const int NumThreads = 10;
 
         static async Task Main(string[] args)
@@ -23,15 +23,13 @@ namespace Nick.Test.MultiThread
             ThreadPool.SetMinThreads(200, 200);
 
             Console.WriteLine($"OneThread:{OneThread()}");
-
-            //Console.WriteLine($"TaskLibrary:{await TaskLibrary(NumThreads)}");
-            //Console.WriteLine($"TaskLibraryStartNew:{await TaskLibraryFactoryStartNew(NumThreads)}");
-            //Console.WriteLine($"TaskLibraryAsync:{await TaskLibraryAsync(NumThreads)}");
-
+            Console.WriteLine($"TaskLibrary:{await TaskLibrary(NumThreads)}");
+            Console.WriteLine($"TaskLibraryStartNew:{await TaskLibraryFactoryStartNew(NumThreads)}");
+            Console.WriteLine($"TaskLibraryAsync:{await TaskLibraryAsync(NumThreads)}");
             Console.WriteLine($"ThreadPoolThreads:{ThreadPoolThreads(NumThreads)}");
             Console.WriteLine($"ManualThreads:{ManualThreads(NumThreads)}");
 
-            //.WriteLine($"ThreadPoolThreads:{ThreadPoolThreads1(NumThreads)}");
+            //Console.WriteLine($"ThreadPoolThreads:{ThreadPoolThreads1(NumThreads)}");
         }
 
         private static double OneThread()
@@ -65,8 +63,8 @@ namespace Nick.Test.MultiThread
                 tasks.Add(Task.Run(() => {
                     for (int j = i; j < i + itemsPerTask; j++)
                     {
-                        //answer = Hero.FindRoot(j);
-                        answer = Hero.GetContentLength();
+                        answer = Hero.FindRoot(j);
+                        //answer = Hero.GetContentLength();
                         //Console.WriteLine($"TaskLibrary調用的Thread Id ={Thread.CurrentThread.ManagedThreadId}, answer={answer}");
                     }
                 }));
@@ -91,8 +89,8 @@ namespace Nick.Test.MultiThread
                 tasks.Add(Task.Run(async () => {
                     for (int j = i; j < i + itemsPerTask; j++)
                     {
-                        //answer =await Hero.FindRootAsync(j);
-                        answer = Hero.GetContentLength();
+                        answer =await Hero.FindRootAsync(j);
+                        //answer = Hero.GetContentLength();
                         //Console.WriteLine($"TaskLibraryAsync調用的Thread Id ={Thread.CurrentThread.ManagedThreadId}, answer={answer}");
                     }
                 }));
@@ -117,8 +115,8 @@ namespace Nick.Test.MultiThread
                 tasks.Add(Task.Factory.StartNew(() => {
                     for (int j = i; j < i + itemsPerTask; j++)
                     {
-                        //answer = Hero.FindRoot(j);
-                        answer = Hero.GetContentLength();
+                        answer = Hero.FindRoot(j);
+                        //answer = Hero.GetContentLength();
                         //Console.WriteLine($"TaskLibraryFactoryStartNew調用的Thread Id ={Thread.CurrentThread.ManagedThreadId}, answer={answer}");
                     }
                 }));
@@ -147,10 +145,9 @@ namespace Nick.Test.MultiThread
                         for (int i = LowerBound; i < UpperBound; i++)
                         {
                             if (i % numThreads == thread1)
-                            //if (numThreads % i   == thread1)
                             {
-                                //answer = Hero.FindRoot(i);
-                                answer = Hero.GetContentLength();
+                                answer = Hero.FindRoot(i);
+                                //answer = Hero.GetContentLength();
                             }
                         }
 
@@ -168,45 +165,6 @@ namespace Nick.Test.MultiThread
                 return start.ElapsedMilliseconds;
             }
         }
-
-        private static double ThreadPoolThreads1(int numThreads)
-        {
-            Stopwatch start = new Stopwatch();
-
-            using (AutoResetEvent e = new AutoResetEvent(false))
-            {
-                int workerThreads = numThreads;
-                double answer = 0;
-                start.Start();
-
-                for (int thread = 0; thread < numThreads; thread++)
-                {
-                    var thread1 = thread;
-                    ThreadPool.QueueUserWorkItem(x => {
-                        for (int i = LowerBound; i < UpperBound; i++)
-                        {
-                            if (i % numThreads == thread1)
-                            {
-                                answer = Hero.GetContentLength();
-                                Console.WriteLine($"ThreadPool調用的Thread Id ={Thread.CurrentThread.ManagedThreadId}, answer={answer}");
-                            }
-                        }
-
-                        if (Interlocked.Decrement(ref workerThreads) == 0)
-                        {
-                            e.Set();
-                        }
-                    });
-                }
-
-
-                e.WaitOne();
-                //Console.WriteLine($"answer={answer}");
-                start.Stop();
-                return start.ElapsedMilliseconds;
-            }
-        }
-
 
         private static double ManualThreads(int numThreads)
         {
@@ -227,8 +185,8 @@ namespace Nick.Test.MultiThread
                         {
                             if (i % numThreads == thread1)
                             {
-                                //answer = Hero.FindRoot(i);
-                                answer = Hero.GetContentLength();
+                                answer = Hero.FindRoot(i);
+                                //answer = Hero.GetContentLength();
                             }
                         }
 
@@ -267,9 +225,9 @@ namespace Nick.Test.MultiThread
                 return guess;
             }
 
-            public static async Task<double> FindRootAsync (double number)
+            public static async Task<double> FindRootAsync(double number)
             {
-                await Task.Delay(10);
+                //await Task.Delay(10);
                 double previousError = double.MaxValue;
                 double guess = 1;
                 double error = Math.Abs(guess * guess - number);
@@ -286,12 +244,12 @@ namespace Nick.Test.MultiThread
 
             public static int GetContentLength()
             {
-
                 Thread.Sleep(100);
 
                 var client = new HttpClient();
                 var url = "https://www.google.com";
-                return client.GetStringAsync(url).Result.Length;
+                //return client.GetStringAsync(url).Result.Length;
+                return 0;
             }
         }
     }
