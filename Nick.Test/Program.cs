@@ -9,34 +9,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
+using ServiceStack;
 
 
 namespace Nick.Test
 {
     class Program
     {
-        static void Main(string[] args)
+        
+
+        static async Task Main(string[] args)
         {
-
-            
-            
-
-            while (true)
-            {
-                Thread.Sleep(100);
-                ShowHello();
-            }
-
-
+           
 
             Console.ReadKey();
-
-        }
+        }        
 
         private static void ShowHello()
         {
             Console.WriteLine("打印我");
-          
         }
+        
     }
 }

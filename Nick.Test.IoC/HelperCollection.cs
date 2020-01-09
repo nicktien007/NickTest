@@ -13,8 +13,8 @@ namespace Nick.Test.IoC
     {
         static HelperCollection()
         {
-            IContainer middleCompany = MiddleCompany();
-            RedisHelper = middleCompany.Resolve<RedisHelper>().GetInstance();
+            IContainer container = MiddleCompany();
+            RedisHelper = container.Resolve<RedisHelper>().GetInstance();
         }
 
         public static IRedisHelper RedisHelper { get; }
