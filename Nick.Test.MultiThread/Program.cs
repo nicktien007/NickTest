@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,15 +23,17 @@ namespace Nick.Test.MultiThread
         {
             ThreadPool.SetMinThreads(200, 200);
 
-            Console.WriteLine($"OneThread:{OneThread()}");
-            Console.WriteLine($"TaskLibrary:{await TaskLibrary(NumThreads)}");
-            Console.WriteLine($"TaskLibraryStartNew:{await TaskLibraryFactoryStartNew(NumThreads)}");
-            Console.WriteLine($"TaskLibraryAsync:{await TaskLibraryAsync(NumThreads)}");
+            //Console.WriteLine($"OneThread:{OneThread()}");
+            //Console.WriteLine($"TaskLibrary:{await TaskLibrary(NumThreads)}");
+            //Console.WriteLine($"TaskLibraryStartNew:{await TaskLibraryFactoryStartNew(NumThreads)}");
+            //Console.WriteLine($"TaskLibraryAsync:{await TaskLibraryAsync(NumThreads)}");
             Console.WriteLine($"ThreadPoolThreads:{ThreadPoolThreads(NumThreads)}");
-            Console.WriteLine($"ManualThreads:{ManualThreads(NumThreads)}");
+            //Console.WriteLine($"ManualThreads:{ManualThreads(NumThreads)}");
 
             //Console.WriteLine($"ThreadPoolThreads:{ThreadPoolThreads1(NumThreads)}");
         }
+
+        
 
         private static double OneThread()
         {
@@ -127,7 +130,7 @@ namespace Nick.Test.MultiThread
             //Console.WriteLine($"answer={answer}");
             return start.ElapsedMilliseconds;
         }
-
+        
         private static double ThreadPoolThreads(int numThreads)
         {
             Stopwatch start = new Stopwatch();
